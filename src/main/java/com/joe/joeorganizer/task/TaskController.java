@@ -1,13 +1,11 @@
 package com.joe.joeorganizer.task;
 
+import com.joe.joeorganizer.exceptions.UnauthorizedActionException;
 import com.joe.joeorganizer.security.TokenUtil;
-import com.joe.joeorganizer.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,13 +36,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@RequestHeader("auth-x") String token, @PathVariable int id) throws UnauthorizedTaskActionException, TaskNotfoundException {
+    public void deleteTask(@RequestHeader("auth-x") String token, @PathVariable int id) throws UnauthorizedActionException, TaskNotfoundException {
         String email = tokenUtil.getUserNameFromToken(token);
         this.taskService.deleteTask(email, id);
     }
 
     @PutMapping("/{id}")
-    public void updateTask(@RequestHeader("auth-x") String token,@RequestBody @Valid Task task,@PathVariable int id) throws UnauthorizedTaskActionException {
+    public void updateTask(@RequestHeader("auth-x") String token,@RequestBody @Valid Task task,@PathVariable int id) throws UnauthorizedActionException {
         String email = tokenUtil.getUserNameFromToken(token);
         this.taskService.update(email,id,task);
     }

@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.joe.joeorganizer.movie.Movie;
 import com.joe.joeorganizer.task.Task;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull(message = "password is required")
-    @Size(min = 10,message = "password must be at least 10 characters!")
+    @Size(min = 10, message = "password must be at least 10 characters!")
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -35,6 +36,17 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Movie> movies;
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 
     @JsonIgnore
     public List<Task> getTasks() {

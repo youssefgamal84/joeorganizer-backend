@@ -3,7 +3,6 @@ package com.joe.joeorganizer.exceptions;
 import java.util.ArrayList;
 
 import com.joe.joeorganizer.task.TaskNotfoundException;
-import com.joe.joeorganizer.task.UnauthorizedTaskActionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -39,8 +38,8 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new ErrorMessage("Password or Email is incorrect"),HttpStatus.UNAUTHORIZED);
 	}
 
-	@ExceptionHandler(UnauthorizedTaskActionException.class)
-	public ResponseEntity<?> unauthorizedTaskAction(UnauthorizedTaskActionException ex, WebRequest request){
+	@ExceptionHandler(UnauthorizedActionException.class)
+	public ResponseEntity<?> unauthorizedTaskAction(UnauthorizedActionException ex, WebRequest request){
 		return new ResponseEntity<>(new ErrorMessage("unauthorized"),HttpStatus.UNAUTHORIZED);
 	}
 
